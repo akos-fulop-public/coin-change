@@ -27,3 +27,7 @@ TEST(CoinChange, SimpleTwoCoins) {
 TEST(CoinChange, UnorderedSimpleTwoCoins) {
 	EXPECT_EQ(coinChange({1, 2}, 3), 2);
 }
+
+TEST(CoinChange, GreedyFail) {
+	EXPECT_EQ(coinChange({3, 8, 11}, 20), 4);
+}
