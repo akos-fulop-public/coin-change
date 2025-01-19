@@ -14,7 +14,7 @@ jobs:
       - name: Create build directory
         run: mkdir -p build
       - name: Configure
-        run: cmake ..
+        run: cmake -DCMAKE_INSTALL_PREFIX=/artifacts ..
         working-directory: ./build
       - name: Build
         run: cmake --build .
@@ -22,3 +22,11 @@ jobs:
       - name: Run Unit Tests
         run: ctest --output-on-failure
         working-directory: ./build
+      - name: Install
+        working-directory: ./build
+        run: cmake --build . -t install
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk
+          path: /artifacts
