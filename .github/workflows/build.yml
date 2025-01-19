@@ -3,10 +3,12 @@ on: [push]
 jobs:
   linux-build:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/builder
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
     steps:
-      - uses: Bacondish2023/setup-googletest@v1
-        with:
-          tag: v1.14.0
       - name: Checkout
         uses: actions/checkout@v4
       - name: Create build directory
