@@ -1,0 +1,22 @@
+name: Build
+on: [push]
+jobs:
+  linux-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Bacondish2023/setup-googletest@v1
+        with:
+          tag: v1.14.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Create build directory
+        run: mkdir -p build
+      - name: Configure
+        run: cmake ..
+        working-directory: ./build
+      - name: Build
+        run: cmake --build .
+        working-directory: ./build
+      - name: Run Unit Tests
+        run: ctest --output-on-failure
+        working-directory: ./build
