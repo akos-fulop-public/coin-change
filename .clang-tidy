@@ -1,0 +1,17 @@
+---
+Checks: '
+  *,
+  -llvm*,
+  -performance-avoid-endl,
+  -modernize-use-trailing-return-type,
+  -misc-no-recursion,
+  -misc-include-cleaner,
+  -bugprone-easily-swappable-parameters,
+  -fuchsia-default-arguments-calls,
+  -google-runtime-int
+'
+WarningsAsErrors:    '*'
+HeaderFilterRegex:   'src/*'
+FormatStyle:         file
+InheritParentConfig: true
+...
