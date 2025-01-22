@@ -15,11 +15,15 @@ class coin_changeRecipe(ConanFile):
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
-    options = {"shared": [True, False], "fPIC": [True, False]}
-    default_options = {"shared": False, "fPIC": True}
+    options = {"shared": [True, False], "fPIC": [True, False], "test": [True, False]}
+    default_options = {"shared": False, "fPIC": True, "test": False}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*", "test/*"
+
+    def requirements(self):
+        if self.options.test:
+            self.requires("gtest/1.15.0")
 
     def config_options(self):
         if self.settings.os == "Windows":
@@ -40,8 +44,14 @@ class coin_changeRecipe(ConanFile):
 
     def build(self):
         cmake = CMake(self)
-        cmake.configure()
+        cmake_vars = {}
+        if self.options.test:
+            cmake_vars["ENABLE_TESTING"] = "ON"
+        cmake.configure(cmake_vars)
         cmake.build()
+        if self.options.test:
+            cmake = CMake(self)
+            cmake.ctest()
 
     def package(self):
         cmake = CMake(self)

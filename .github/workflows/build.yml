@@ -11,25 +11,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Create build directory
-        run: mkdir -p build
-      - name: Configure
-        run: cmake -DCMAKE_INSTALL_PREFIX=/artifacts ..
-        working-directory: ./build
-      - name: Build
-        run: cmake --build .
-        working-directory: ./build
-      - name: Run Unit Tests
-        run: ctest --output-on-failure
-        working-directory: ./build
-      - name: Install
-        working-directory: ./build
-        run: cmake --build . -t install
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: sdk
-          path: /artifacts
+      - name: Detect Conan Profile
+        run: conan profile detect
+      - name: Build conan package
+        run: conan create -o test=True --build missing .
   static-analyze:
     runs-on: ubuntu-latest
     container:
