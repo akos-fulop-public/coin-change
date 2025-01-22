@@ -8,10 +8,9 @@ class coin_changeRecipe(ConanFile):
     package_type = "library"
 
     # Optional metadata
-    license = "<Put the package license here>"
+    license = "MIT"
     author = "Akos Fulop akos.fulop.github@gmail.com"
     url = "https://github.com/akos-fulop-public/coin-change"
-    topics = ("<Put some tag here>", "<here>", "<and here>")
 
     # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
